@@ -1,0 +1,22 @@
+<ul id="message_<%= id %>">
+    <li>
+        <h3> <%= "#{session[:first_name]} #{session[:last_name]} - #{DateTime.now.strftime("%-m/%-d/%Y %l:%M %p")}" %> </h3>
+        <p contenteditable="true" data-message_id="<%= id %>"><%= message %></p>
+        <form class="delete_message_form" action="/delete_message" method="POST" data-is_processing="0">
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+            <input type="hidden" name="message_id" value="<%= id %>">
+            <button type='submit'>Delete Message</button>
+        </form>
+    </li>
+    <h3> Comments </h3>
+    <ul id="comment_list_<%= id %>">
+    </ul>
+    <li>
+        <form class="create_comment" action="/post_comment" method="POST" data-is_processing="0">
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+            <input type="hidden" name="message_id" value="<%= id %>">
+            <h6> <textarea name="comment" placeholder="Leave a comment"></textarea> </p>
+            <button type='submit'>Post Comment</button>
+        </form>
+    </li>
+</ul>

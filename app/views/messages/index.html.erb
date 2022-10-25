@@ -1,0 +1,73 @@
+<div class="header">
+    <h2> The Wall of Fitz </h2>
+    <div class="user-interface">
+        <h3>Welcome back, <%= session[:first_name] %>!</h3>
+        <h6><a href="/logout">Log off</a></h6>
+    </div>
+</div>
+<div class="content">
+    <form id="create_message_form" class="post-messages" action="/post_message" method="POST" data-is_processing="0">
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+        <h6>
+            <label>Post a message:</label>
+            <textarea name="message" placeholder="What's on your mind?"></textarea>
+        </h6>
+        <button type='submit'>Post Message</button>
+    </form>
+    <h5> All Messages </h5>
+    <div id="messages-comments">
+        <% @all_messages.each do |message| %>
+            <ul id="message_<%= message["message_id"] %>">
+                <li>
+                    <h3> <%= "#{message["message_owner_name"]} - #{message["last_message_update_data"].strftime("%-m/%-d/%Y %l:%M %p")}" %> </h3>
+                    <p <%= "contenteditable=true" if message["message_owner_id"].to_i === session[:user_id] %> data-message_id="<%= message["message_id"] %>"><%= message["message"] %></p>
+                    <% if message["message_owner_id"].to_i === session[:user_id] %>
+                        <form class="delete_message_form" action="/delete_message" method="POST" data-is_processing="0">
+                            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                            <input type="hidden" name="message_id" value="<%= message["message_id"] %>">
+                            <button type='submit'>Delete Message</button>
+                        </form>
+                    <% end %>
+                </li>
+                <h3> Comments </h3>
+                <ul id="comment_list_<%= message["message_id"] %>">
+                    <% if message["comments"].present? %>
+                        <% JSON.parse(message["comments"]).each do |comment|%>
+                            <li id="comment_<%= comment["comment_id"] %>">
+                                <h3> <%= "#{comment["comment_owner_name"]} - #{comment["last_comment_update_date"].to_datetime.strftime("%-m/%-d/%Y %l:%M %p")}"  %> </h3>
+                                <p <%= "contenteditable=true" if comment["comment_owner_id"].to_i === session[:user_id] %> data-comment_id="<%= comment["comment_id"] %>"><%= comment["comment"] %></p>
+                                <% if comment["comment_owner_id"].to_i === session[:user_id] %>
+                                    <form class="delete_comment_form" action="/delete_comment" method="POST" data-is_processing="0">
+                                        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                                        <input type="hidden" name="comment_id" value="<%= comment["comment_id"] %>">
+                                        <button type='submit'>Delete Comment</button>
+                                    </form>
+                                <% end %>
+                            </li>
+                        <% end %>
+                    <% end %>
+                </ul>
+                <li>
+                    <form class="create_comment" action="/post_comment" method="POST" data-is_processing="0">
+                        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                        <input type="hidden" name="message_id" value="<%= message["message_id"]%>">
+                        <h6> <textarea name="comment" placeholder="Leave a comment"></textarea> </h6>
+                        <button type='submit'>Post Comment</button>
+                    </form>
+                </li>
+            </ul>
+       <% end %>
+    </div>
+</div>
+
+<form id="edit_message_form" action="/update_message" method="POST" data-is_processing="0">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <input type="hidden" name="message_id" value="">
+    <input type="hidden" name="message" value="">
+</form>
+
+<form id="edit_comment_form" action="/update_comment" method="POST" data-is_processing="0">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <input type="hidden" name="comment_id" value="">
+    <input type="hidden" name="comment" value="">
+</form>

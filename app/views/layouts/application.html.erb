@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>The Wall of Fitz</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    "#{params['controller']}", media: 'all' %>
+    <%= javascript_include_tag "#{params['controller']}_#{params['action']}" %>
+  </head>
+
+  <body>
+    <%= yield %>
+  </body>
+</html>
