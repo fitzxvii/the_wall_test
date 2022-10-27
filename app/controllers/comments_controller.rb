@@ -43,10 +43,7 @@ class CommentsController < ApplicationController
         begin
             require_params = params.permit!.require([:comment_id, :comment])
 
-            if require_params.present?
-                update_comment = Comment.update_comment({:user_id => session[:user_id], :comment_id => params[:comment_id], :comment => params[:comment]})
-                response_data  = update_comment
-            end
+            response_data = Comment.update_comment({:user_id => session[:user_id], :comment_id => params[:comment_id], :comment => params[:comment]}) if require_params.present?
         rescue Exception => ex
             response_data[:error] = ex
         end
@@ -65,10 +62,7 @@ class CommentsController < ApplicationController
         begin
             require_params = params.permit!.require(:comment_id)
 
-            if require_params.present?
-                delete_comment = Comment.delete_comment({:user_id => session[:user_id], :comment_id => params[:comment_id]})
-                response_data  = delete_comment
-            end
+            response_data  = Comment.delete_comment({:user_id => session[:user_id], :comment_id => params[:comment_id]}) if require_params.present?
         rescue Exception => ex
             response_data[:error] = ex
         end

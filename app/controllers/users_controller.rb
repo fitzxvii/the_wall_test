@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+    before_action :session_exists?, except: [:logout]
+
     # DOCU: The login-register page
     # Triggered by: (GET) /
     def login_register
@@ -72,12 +74,18 @@ class UsersController < ApplicationController
     end
 
     private
-        # DOCU: Log out the user on main page
+        # DOCU: Set the user session after login/signout
         # Triggered by: self.register, self.login
         # Requires: params - :id, :first_name, :last_name
         def set_session(user_data)
             session[:user_id] = user_data[:id]
             session[:first_name] = user_data[:first_name]
             session[:last_name] = user_data[:last_name]
+        end
+
+        # DOCU: Log out the user on main page
+        # Triggered by: before_action
+        def session_exists?
+            redirect_to "/main" if session[:user_id].present?
         end
 end
