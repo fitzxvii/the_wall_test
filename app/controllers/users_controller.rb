@@ -83,7 +83,7 @@ class UsersController < ApplicationController
             session[:last_name] = user_data[:last_name]
         end
 
-        # DOCU: Log out the user on main page
+        # DOCU: Return to main menu if user accesses the login-register page again
         # Triggered by: before_action
         def session_exists?
             redirect_to "/main" if session[:user_id].present?

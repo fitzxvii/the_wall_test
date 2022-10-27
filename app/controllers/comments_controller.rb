@@ -1,4 +1,6 @@
 class CommentsController < ApplicationController
+    before_action :session_exists?
+
     # DOCU: Create new comment of the current user below selected message
     # Triggered by: (POST) /post_comment
     # Session: session - user_id
@@ -69,4 +71,11 @@ class CommentsController < ApplicationController
 
         render :json => response_data
     end
+
+    private
+        # DOCU: Returns to login-register page if session not yet set
+        # Triggered by: before_action
+        def session_exists?
+            redirect_to "/" if !session[:user_id].present?
+        end
 end

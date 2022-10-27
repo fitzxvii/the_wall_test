@@ -1,4 +1,6 @@
 class MessagesController < ApplicationController
+    before_action :session_exists?
+
     # DOCU: The main page of The Wall
     # Triggered by: (GET) /main
     # Returns: @all_messages
@@ -79,4 +81,11 @@ class MessagesController < ApplicationController
 
         render :json => response_data
     end
+
+    private
+        # DOCU: Returns to login-register page if session not yet set
+        # Triggered by: before_action
+        def session_exists?
+            redirect_to "/" if !session[:user_id].present?
+        end
 end
