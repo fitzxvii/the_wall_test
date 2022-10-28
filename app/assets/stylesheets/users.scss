@@ -9,45 +9,45 @@
     margin: 10px auto;
     padding: 10px;
     border: solid black 3px;
-}
 
-.login-page h1 {
-    text-align: center;
-}
+    h1 {
+        text-align: center;
+    }
 
-.login-page h2 {
-    margin-left: 30px;
-}
+    h2 {
+        margin-left: 125px;
+    }
 
-.login-page label {
-    width: 216px;
-    display: inline-block;
-    text-align: right;
-}
+    label {
+        width: 245px;
+        display: inline-block;
+        text-align: right;
+    }
 
-.login-page input {
-    margin-left: 20px;
-}
+    input {
+        margin-left: 20px;
+    }
 
-.login-page .submit {
-    width: 125px;
-    height: 30px;
-    margin-left: 240px;
-    margin-bottom: 20px;
-}
+    .submit {
+        width: 100px;
+        height: 25px;
+        margin-left: 240px;
+        margin-bottom: 20px;
+    }
 
-.login-page .error {
-    border-color: maroon;
-}
+    .error {
+        border-color: maroon;
+    }
 
-.login-page .error_msg {
-    text-align: left;
-    color: maroon;
-    font-weight: bold;
-    font-size: 12px;
-    margin-left: 240px;
-}
+    .error_msg{
+        text-align: left;
+        color: maroon;
+        font-weight: bold;
+        font-size: 12px;
+        margin-left: 240px;
+    }
 
-.login-page .hidden {
-    display: none
+    .hidden {
+        display: none
+    }
 }
