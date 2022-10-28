@@ -101,19 +101,21 @@ function submitEditMessageForm() {
 function submitDeleteMessageForm() {
     let delete_message_form = $(this);
 
-    if(delete_message_form.attr("data-is_processing") === "0"){
-        delete_message_form.attr("data-is_processing", "1");
+    if(confirm("Are you sure you want to delete this message?")){
+        if(delete_message_form.attr("data-is_processing") === "0"){
+            delete_message_form.attr("data-is_processing", "1");
 
-        $.post(delete_message_form.attr("action"), delete_message_form.serialize(), function(message_data){
-            if(message_data.status){
-                $("#messages-comments").find("#message_"+message_data.result).remove();
-            }
-            else{
-                alert(message_data.error);
-            }
+            $.post(delete_message_form.attr("action"), delete_message_form.serialize(), function(message_data){
+                if(message_data.status){
+                    $("#messages-comments").find("#message_"+message_data.result).remove();
+                }
+                else{
+                    alert(message_data.error);
+                }
 
-            delete_message_form.attr("data-is_processing", "0");
-        }, "json");
+                delete_message_form.attr("data-is_processing", "0");
+            }, "json");
+        }
     }
 
     return false;
@@ -174,19 +176,21 @@ function submitEditCommentForm() {
 function submitDeleteCommentForm() {
     let delete_comment_form = $(this);
 
-    if(delete_comment_form.attr("data-is_processing") === "0"){
-        delete_comment_form.attr("data-is_processing", "1");
+    if(confirm("Are you sure you want to delete this comment?")){
+        if(delete_comment_form.attr("data-is_processing") === "0"){
+            delete_comment_form.attr("data-is_processing", "1");
 
-        $.post(delete_comment_form.attr("action"), delete_comment_form.serialize(), function(comment_data){
-            if(comment_data.status){
-                $("#comment_"+comment_data.result).remove();
-            }
-            else{
-                alert(comment_data.error);
-            }
+            $.post(delete_comment_form.attr("action"), delete_comment_form.serialize(), function(comment_data){
+                if(comment_data.status){
+                    $("#comment_"+comment_data.result).remove();
+                }
+                else{
+                    alert(comment_data.error);
+                }
 
-            delete_comment_form.attr("data-is_processing", "0");
-        }, "json");
+                delete_comment_form.attr("data-is_processing", "0");
+            }, "json");
+        }
     }
 
     return false;
